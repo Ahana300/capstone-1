@@ -1,0 +1,121 @@
+#  AI Health and Nutrition Analyzer App UI/UX 
+
+import streamlit as st
+import time
+from PIL import Image
+
+st.set_page_config(
+    page_title="AI Health App",
+    page_icon="🩺",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
+
+st.sidebar.image("https://cdn-icons-png.flaticon.com/512/4320/4320337.png", width=100)
+st.sidebar.title("🩺 AI Health App")
+st.sidebar.markdown("---")
+
+page = st.sidebar.radio(
+    "Navigation",
+    ["🏠 Home", "📊 Prediction", "ℹ️ About"],
+    index=0
+)
+
+st.sidebar.markdown("---")
+st.sidebar.info("Developed by Team AI Health")
+st.sidebar.markdown
+
+#  HOME PAGE 
+if page == "🏠 Home":
+    st.title("Welcome to the AI Health App 👋")
+    st.write("This web application uses Artificial Intelligence to predict health outcomes based on user-provided data.")
+    st.image("https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg", use_container_width=True)
+
+    st.markdown("""
+    ### 🌟 Features:
+    - Simple and user-friendly interface  
+    - Fast AI-powered predictions  
+    - Clean and modern UI design  
+    - Accessible on any device  
+    """)
+
+    with st.expander("📘 How to use this app"):
+        st.markdown("""
+        1. Go to the Prediction page.  
+        2. Enter your personal and health details.  
+        3. Click Predict Health Status.  
+        4. View your result and health recommendation instantly.
+        """)
+
+    st.success("Navigate to the 'Prediction' tab to get started!")
+
+# PREDICTION PAGE
+elif page == "📊 Prediction":
+    st.title("🧠 AI Health Prediction")
+
+    st.markdown("### Please fill in your details below:")
+    with st.form("health_form"):
+        col1, col2 = st.columns(2)
+
+        with col1:
+            age = st.number_input("Age", min_value=1, max_value=120, value=25)
+            gender = st.selectbox("Gender", ["Male", "Female", "Other"])
+            bmi = st.slider("BMI", 10.0, 50.0, 22.0)
+            blood_pressure = st.slider("Blood Pressure", 60, 180, 120)
+
+        with col2:
+            glucose = st.number_input("Glucose Level (mg/dL)", 50, 300, 90)
+            cholesterol = st.number_input("Cholesterol Level (mg/dL)", 100, 350, 200)
+            smoking = st.selectbox("Do you smoke?", ["No", "Yes"])
+            exercise = st.selectbox("Do you exercise regularly?", ["Yes", "No"])
+
+        submitted = st.form_submit_button("🔍 Predict Health Status")
+
+    if submitted:
+        with st.spinner("Analyzing your health data... Please wait ⏳"):
+            time.sleep(2)  # simulate model computation
+            # ---------------------------
+           
+            # Example:
+            # prediction = model.predict([[age, bmi, glucose, cholesterol, ...]])
+            # For now, simulate result
+            import random
+            health_score = random.uniform(0, 1)
+            # ---------------------------
+
+        st.markdown("### 🩺 Prediction Result")
+        if health_score > 0.5:
+            st.success("✅ You are likely Healthy based on your data.")
+            st.progress(int(health_score * 100))
+            st.balloons()
+        else:
+            st.error("⚠️ You may be at Risk — please consult a medical professional.")
+            st.progress(int(health_score * 100))
+
+        with st.expander("📈 Health Recommendation"):
+            if health_score > 0.5:
+                st.markdown("""
+                - Maintain a balanced diet 🥗  
+                - Keep up your exercise routine 🏃‍♀️  
+                - Stay hydrated 💧  
+                - Continue regular checkups 🩺
+                """)
+            else:
+                st.markdown("""
+                - Reduce sugar and salt intake 🧂  
+                - Exercise at least 30 mins a day 🚶‍♀️  
+                - Get enough sleep 😴  
+                - Consult your doctor for personalized advice 👨‍⚕️
+                """)
+
+
+elif page == "ℹ️ About":
+    st.title("ℹ️ About the Project")
+    st.markdown("""
+    The AI Health App is a collaborative university project created to demonstrate
+    the potential of Artificial Intelligence in healthcare.
+
+   
+
+    ### 🛠️ Tech Stack
